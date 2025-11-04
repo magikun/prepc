@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react'
-import { auth, googleProvider } from '../lib/firebase'
-import { onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, signOut, User } from 'firebase/auth'
+import { auth, googleProvider, firebaseEnabled } from '../lib/firebase'
+import { onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, signOut as fbSignOut, User } from 'firebase/auth'
 
 type AuthContextValue = {
   user: User | null
@@ -18,10 +18,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const unsub = onAuthStateChanged(auth, (u) => {
-      setUser(u)
-      setLoading(false)
-    })
+    if (!firebaseEnabled || !auth) { setLoading(false); return }
+    const unsub = onAuthStateChanged(auth, (u) => { setUser(u); setLoading(false) })
     return () => unsub()
   }, [])
 
@@ -29,16 +27,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     user,
     loading,
     async signInWithEmail(email, password) {
+      if (!firebaseEnabled || !auth) throw new Error('Auth not configured')
       await signInWithEmailAndPassword(auth, email, password)
     },
     async signUpWithEmail(email, password) {
+      if (!firebaseEnabled || !auth) throw new Error('Auth not configured')
       await createUserWithEmailAndPassword(auth, email, password)
     },
     async signInWithGoogle() {
+      if (!firebaseEnabled || !auth || !googleProvider) throw new Error('Auth not configured')
       await signInWithPopup(auth, googleProvider)
     },
     async signOut() {
-      await signOut(auth)
+      if (!firebaseEnabled || !auth) return
+      await fbSignOut(auth)
     },
   }
 
