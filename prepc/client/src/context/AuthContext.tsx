@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import { auth, googleProvider, firebaseEnabled } from '../lib/firebase'
-import { onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, signOut as fbSignOut, User } from 'firebase/auth'
+import { onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, signOut as fbSignOut } from 'firebase/auth'
+import type { User } from 'firebase/auth'
 
 type AuthContextValue = {
   user: User | null
