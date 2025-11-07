@@ -4,19 +4,19 @@ Modern full-stack MVP for PrepC.
 
 ## Structure
 
-- `client-react`: React + TypeScript + Tailwind + Framer Motion
+- `PrepC` (frontend): React + TypeScript + Tailwind + Framer Motion
 - `server`: Node.js + TypeScript + Express
 
 ## Scripts
 
 - Frontend
-  - `cd prepc/client-react && npm start`
+  - `cd prepc/client && npm start`
 - Backend
   - `cd prepc/server && npm start`
 
 ## Environment (Frontend)
 
-Create `prepc/client-react/.env`:
+Create `prepc/client/.env`:
 
 ```
 VITE_FIREBASE_API_KEY=...

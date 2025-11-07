@@ -10,7 +10,7 @@ export function CategoryPage({ title, icon }: CategoryPageProps) {
   const [open, setOpen] = useState(false)
 
   return (
-    <div className="mx-auto max-w-5xl px-6 py-10">
+    <div className="mx-auto max-w-screen-xl px-6 md:px-10 py-10">
       <div className="flex items-center gap-3">
         <span className="text-3xl">{icon}</span>
         <h1 className="text-3xl font-bold">{title}</h1>
@@ -18,13 +18,13 @@ export function CategoryPage({ title, icon }: CategoryPageProps) {
       <p className="text-gray-600 mt-1">Add new items and manage your {title.toLowerCase()}.</p>
 
       <div className="mt-6 flex items-center gap-3">
-        <button onClick={() => setOpen(true)} className="rounded-xl bg-indigo-600 text-white px-4 py-3 hover:bg-indigo-500">Add {title.slice(0, -1)}</button>
+        <button onClick={() => setOpen(true)} className="rounded-xl bg-indigo-600 text-white px-4 py-3 hover:bg-indigo-500 hover-lift">Add {title.slice(0, -1)}</button>
         <div className="text-sm text-gray-600">{items.length} total</div>
       </div>
 
       {open && (
         <div className="fixed inset-0 z-50 grid place-items-center bg-black/30 p-4" role="dialog" aria-modal>
-          <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl">
+          <div className="w-full max-w-md rounded-2xl glass-card p-6">
             <h2 className="text-lg font-semibold">Add {title.slice(0, -1)}</h2>
             <div className="mt-4 space-y-3">
               <input
@@ -35,7 +35,7 @@ export function CategoryPage({ title, icon }: CategoryPageProps) {
                 className="w-full rounded-xl border px-4 py-3"
               />
               <div className="flex justify-end gap-2">
-                <button onClick={() => setOpen(false)} className="rounded-xl border px-4 py-2 text-sm hover:bg-gray-50">Cancel</button>
+                <button onClick={() => setOpen(false)} className="rounded-xl border px-4 py-2 text-sm hover:bg-gray-50 hover-lift">Cancel</button>
                 <button
                   onClick={() => {
                     if (!newTitle.trim()) return
@@ -43,7 +43,7 @@ export function CategoryPage({ title, icon }: CategoryPageProps) {
                     setNewTitle('')
                     setOpen(false)
                   }}
-                  className="rounded-xl bg-indigo-600 text-white px-4 py-2 text-sm hover:bg-indigo-500"
+                  className="rounded-xl bg-indigo-600 text-white px-4 py-2 text-sm hover:bg-indigo-500 hover-lift"
                 >
                   Save
                 </button>
@@ -58,12 +58,12 @@ export function CategoryPage({ title, icon }: CategoryPageProps) {
           <p className="text-sm text-gray-600">No items yet.</p>
         )}
         {items.map((item) => (
-          <div key={item.id} className="rounded-xl border p-4 flex items-center justify-between">
+          <div key={item.id} className="rounded-xl glass-card p-4 flex items-center justify-between hover-lift">
             <div className="font-medium">{item.title}</div>
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setItems((prev) => prev.filter((i) => i.id !== item.id))}
-                className="rounded-lg border px-3 py-2 text-sm hover:bg-gray-50"
+                className="rounded-lg border px-3 py-2 text-sm hover:bg-gray-50 hover-lift"
               >
                 Delete
               </button>
